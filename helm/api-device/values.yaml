@@ -1,0 +1,39 @@
+replicaCount: 1
+
+image:
+  repository: diegoalonmoratiel/device-management-api
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8000
+  targetPort: 8000
+
+ingress:
+  enabled: true
+  host: device-api.local
+
+config:
+  logLevel: INFO
+  debug: "false"
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+livenessProbe:
+  path: /health
+  initialDelaySeconds: 10
+  periodSeconds: 15
+
+readinessProbe:
+  path: /health
+  initialDelaySeconds: 5
+  periodSeconds: 10
+
+nodeSelector:
+  kubernetes.io/hostname: "desktop-0ftoa8j"
