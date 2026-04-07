@@ -42,4 +42,10 @@ spec:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
               memory: {{ .Values.resources.requests.memory }}
+          volumeMounts:
+            - name: data
+              mountPath: /app/data
       nodeSelector: {{- toYaml .Values.nodeSelector | nindent 8 }}
+      volumes:
+        - name: data
+          emptyDir: {}
