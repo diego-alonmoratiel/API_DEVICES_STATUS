@@ -8,7 +8,11 @@ from app.database import Base, get_db
 # Base de datos en memoria para tests
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
 
-engine_test = create_async_engine(TEST_DATABASE_URL)
+engine_test = create_async_engine(
+    TEST_DATABASE_URL,
+    connect_args={"check_same_thread": False},  # Allow async threads to access same DB
+    poolclass=StaticPool,                        # Use StaticPool to reuse same connection
+)
 AsyncSessionTest = async_sessionmaker(engine_test, expire_on_commit=False)
 
 async def override_get_db():
