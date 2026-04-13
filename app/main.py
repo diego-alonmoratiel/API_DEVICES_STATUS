@@ -21,6 +21,7 @@ app.include_router(devices.router)
 app.include_router(metrics.router)
 app.include_router(alerts.router)
 
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}

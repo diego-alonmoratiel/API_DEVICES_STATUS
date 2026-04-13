@@ -7,12 +7,14 @@ from app.schemas import AlertResponse
 
 router = APIRouter(prefix="/alerts", tags=["alerts"])
 
+
 @router.get("/", response_model=list[AlertResponse])
 async def list_alerts(db: AsyncSession = Depends(get_db)):
     result = await db.execute(
-        select(Alert).where(Alert.resolved == False)
+        select(Alert).where(Alert.resolved is False)
     )
     return result.scalars().all()
+
 
 @router.patch("/{alert_id}/resolve", response_model=AlertResponse)
 async def resolve_alert(alert_id: int, db: AsyncSession = Depends(get_db)):

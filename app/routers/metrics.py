@@ -8,6 +8,7 @@ from app.services.alert_service import evaluate_and_create_alert
 
 router = APIRouter(prefix="/devices", tags=["metrics"])
 
+
 @router.post("/{device_id}/metrics", response_model=MetricResponse, status_code=201)
 async def create_metric(
     device_id: int,
@@ -20,7 +21,7 @@ async def create_metric(
 
     existing = await db.execute(
         select(Metric).where(
-            (Metric.device_id == device_id) & 
+            (Metric.device_id == device_id) &
             (Metric.key == payload.key)
         )
     )
@@ -35,6 +36,7 @@ async def create_metric(
     await evaluate_and_create_alert(db, device_id, payload.key, payload.value)
 
     return metric
+
 
 @router.get("/{device_id}/metrics", response_model=list[MetricResponse])
 async def list_metrics(device_id: int, db: AsyncSession = Depends(get_db)):

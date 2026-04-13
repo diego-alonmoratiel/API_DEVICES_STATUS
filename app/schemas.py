@@ -9,8 +9,10 @@ class DeviceCreate(BaseModel):
     type: str
     location: str | None = None
 
+
 class DeviceStatusUpdate(BaseModel):
     status: DeviceStatus
+
 
 class DeviceResponse(BaseModel):
     id: int
@@ -24,6 +26,8 @@ class DeviceResponse(BaseModel):
 
 
 # Metric
+
+
 class MetricCreate(BaseModel):
     key: str
     value: float
@@ -41,6 +45,8 @@ class MetricResponse(BaseModel):
 
 
 # Alert
+
+
 class AlertResponse(BaseModel):
     id: int
     device_id: int

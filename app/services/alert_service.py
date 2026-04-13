@@ -8,6 +8,7 @@ THRESHOLDS: dict[str, list[tuple[float, AlertSeverity]]] = {
     "disk_usage":   [(95.0, AlertSeverity.CRITICAL), (80.0, AlertSeverity.WARNING)],
 }
 
+
 async def evaluate_and_create_alert(
     db: AsyncSession,
     device_id: int,

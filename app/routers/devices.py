@@ -7,10 +7,12 @@ from app.schemas import DeviceCreate, DeviceResponse, DeviceStatusUpdate
 
 router = APIRouter(prefix="/devices", tags=["devices"])
 
+
 @router.get("/", response_model=list[DeviceResponse])
 async def list_devices(db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Device))
     return result.scalars().all()
+
 
 @router.post("/", response_model=DeviceResponse, status_code=201)
 async def create_device(payload: DeviceCreate, db: AsyncSession = Depends(get_db)):
@@ -20,12 +22,14 @@ async def create_device(payload: DeviceCreate, db: AsyncSession = Depends(get_db
     await db.refresh(device)
     return device
 
+
 @router.get("/{device_id}", response_model=DeviceResponse)
 async def get_device(device_id: int, db: AsyncSession = Depends(get_db)):
     device = await db.get(Device, device_id)
     if not device:
         raise HTTPException(status_code=404, detail="Device not found")
     return device
+
 
 @router.patch("/{device_id}/status", response_model=DeviceResponse)
 async def update_status(
