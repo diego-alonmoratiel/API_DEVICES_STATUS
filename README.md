@@ -70,7 +70,6 @@ docker compose up
 ```
 
 API available at `http://localhost:8000`
-Interactive docs at `http://localhost:8000/docs`
 
 ## Running Tests
 
